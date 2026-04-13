@@ -1,4 +1,4 @@
-import axios,{ type AxiosResponse } from 'axios';
+import axios, { type AxiosResponse } from 'axios';
 import type { Note, NoteTag } from '../types/note';
 
 export interface FetchNotesResponse {
@@ -21,8 +21,13 @@ const instance = axios.create({
     },
 });
 
-export const fetchNotes = async (page: number, search: string): Promise<FetchNotesResponse> => {
-    const response: AxiosResponse<FetchNotesResponse> =  await instance.get('/notes', {
+export const fetchNotes = async (
+    page: number,
+    search: string
+): Promise<FetchNotesResponse> => {
+    const response:
+        AxiosResponse<FetchNotesResponse> =
+        await instance.get('/notes', {
         params: {
             page,
             perPage: 12,
@@ -33,20 +38,25 @@ export const fetchNotes = async (page: number, search: string): Promise<FetchNot
 };
 
 export const createNote = async (
-    note: CreateNoteRequest): Promise<Note> => {
+    note: CreateNoteRequest
+): Promise<Note> => {
     const response: AxiosResponse<Note> = await instance.post('/notes',
         note
     );
     return response.data;
 };
 
-export const deleteNote = async (id: string): Promise<Note> => {
-    const response: AxiosResponse<Note> = await axios.delete(`/notes/${id}`
+export const deleteNote = async (
+    id: string
+): Promise<Note> => {
+    const response: AxiosResponse<Note> = await instance.delete(`/notes/${id}`
     );
     return response.data;
 };
     
-    export const fetchNoteById = async (id: string): Promise<Note> => {
+export const fetchNoteById = async (
+    id: string
+): Promise<Note> => {
         const response: AxiosResponse<Note> = await instance.get(`/notes/${id}`
 
         );

@@ -24,7 +24,7 @@ export default function NotesClient() {
     }, 500);
 
     const { data, isLoading, isError } = useQuery({
-        queryKey: ['notes', page, search],
+        queryKey: ['notes', { page, search }],
         queryFn: () => fetchNotes(page, search),
         placeholderData: keepPreviousData,
     });
@@ -32,11 +32,14 @@ export default function NotesClient() {
     const notes = data?.notes ?? [];
     const totalPages = data?.totalPages ?? 0;
 
+    if (isLoading) return <p>Loading please wait...</p>;
+    if (isError) return <p>Something went wrong</p>;
+
     return (
         <div className={css.app}>
             <header className={css.toolbar}>
                 <SearchBox
-                    onChange={handleSearch}
+                    onChange={(value) => handleSearch(value)}
                 />
 
                 {totalPages > 1 && (
@@ -54,10 +57,10 @@ export default function NotesClient() {
                 </button>
             </header>
 
-            {!isLoading && !isError && notes.length > 0 && (
+            { notes.length > 0 && 
                 <NoteList notes={notes}
                 />
-            )}
+            }
 
             {isModalOpen && (
                 <Modal onClose={() =>
