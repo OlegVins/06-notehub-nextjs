@@ -26,8 +26,7 @@ export const fetchNotes = async (
     search: string
 ): Promise<FetchNotesResponse> => {
     const response:
-        AxiosResponse<FetchNotesResponse> =
-        await instance.get('/notes', {
+        AxiosResponse<FetchNotesResponse> = await instance.get('/notes', {
         params: {
             page,
             perPage: 12,
