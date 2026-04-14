@@ -1,3 +1,5 @@
+'use client'
+
 import axios, { type AxiosResponse } from 'axios';
 import type { Note, NoteTag } from '../types/note';
 import { log } from 'console';
@@ -15,13 +17,15 @@ export interface CreateNoteRequest {
 
 const BASE_URL = 'https://notehub-public.goit.study/api';
 
-console.log("Проверка токена:" , process.env.NEXT_PUBLIC_NOTEHUB_TOKEN);
+const token = process.env.NEXT_PUBLIC_NOTEHUB_TOKEN;
+
+console.log("Проверка токена:" , token);
 
 
 const instance = axios.create({
     baseURL: BASE_URL,
     headers: {
-        Authorization: `Bearer ${process.env.NEXT_PUBLIC_NOTEHUB_TOKEN}`,
+        Authorization: `Bearer ${token}`,
     },
 });
 
