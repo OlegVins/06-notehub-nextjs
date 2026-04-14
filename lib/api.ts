@@ -1,5 +1,6 @@
 import axios, { type AxiosResponse } from 'axios';
 import type { Note, NoteTag } from '../types/note';
+import { log } from 'console';
 
 export interface FetchNotesResponse {
     notes: Note[];
@@ -13,6 +14,9 @@ export interface CreateNoteRequest {
 }
 
 const BASE_URL = 'https://notehub-public.goit.study/api';
+
+console.log("Проверка токена:" , process.env.NEXT_PUBLIC_NOTEHUB_TOKEN);
+
 
 const instance = axios.create({
     baseURL: BASE_URL,
