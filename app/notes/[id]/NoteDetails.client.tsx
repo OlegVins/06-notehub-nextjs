@@ -6,12 +6,12 @@ import { fetchNoteById } from '@/lib/api';
 import css from './NoteDetais.module.css';
 
 export default function NoteDetailsClient() {
-    const params = useParams();
-    const id = params.id as string;
+    const { id } = useParams();
 
     const { data: note, isLoading, error } = useQuery({
-        queryKey: ['note', { id }],
-        queryFn: () => fetchNoteById(id),
+        queryKey: ['note', id ],
+        queryFn: () => fetchNoteById(id as string),
+        refetchOnMount: false,
     });
 
     if (isLoading) return <p>Loading, please wait...</p>;
