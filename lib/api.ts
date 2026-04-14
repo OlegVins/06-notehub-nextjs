@@ -3,6 +3,7 @@
 import axios, { type AxiosResponse } from 'axios';
 import type { Note, NoteTag } from '../types/note';
 import { log } from 'console';
+import { config } from 'process';
 
 export interface FetchNotesResponse {
     notes: Note[];
@@ -17,17 +18,21 @@ export interface CreateNoteRequest {
 
 const BASE_URL = 'https://notehub-public.goit.study/api';
 
-const token = process.env.NEXT_PUBLIC_NOTEHUB_TOKEN;
-
-console.log("Проверка токена:" , token);
-
-
 const instance = axios.create({
     baseURL: BASE_URL,
-    headers: {
-        Authorization: `Bearer ${token}`,
-    },
 });
+
+instance.interceptors.request.use((config) => {
+    const token = process.env.NEXT_PUBLIC_NOTEHUB_TOKEN;
+
+    if (token) {
+        config.headers.Authorization = `Bearer ${token}`;
+    } else {
+        console.warn("Warning: NEXT_PUBLIC_NOTEHUB_TOKEN not fined!");
+    }
+    return config;
+})
+
 
 export const fetchNotes = async (
     page: number,
